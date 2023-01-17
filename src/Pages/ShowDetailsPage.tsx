@@ -7,7 +7,7 @@ import GenrePill from "../Components/GenrePill";
 import LoadingSpinner from "../Components/LoadingSpinner";
 import withRouter, { WithRouterProps } from "../hocs/withRouter";
 import { show } from "../models/show";
-import { showmapselectore } from "../selectore/shows";
+import { showloadingselector, showmapselectore, showselectore } from "../selectore/shows";
 import { State } from "../store";
 
 type OwnProps = WithRouterProps;
@@ -17,16 +17,21 @@ const ShowDetailPage: FC<ShowDetailPageProps> = ({
   params,
   show,
   loadshow,
+ loading
 }) => {
   useEffect(() => {
     loadshow(+params.showId);
   }, [params.showId]);
 
-  // console.log(show);
+  console.log(show);
+  if(!show){
+    return <LoadingSpinner></LoadingSpinner>
+  }
 
   return (
     <div className="mt-2">
       <Link to="/">back</Link>
+     
       <h2 className="text-4xl font-semibold tracking-wide">{show.name}</h2>
       <div className="flex space-x-3 my-2 bg-gray-300 p-2 rounded-sm">
         {show.genres.map((genere: string) => (
@@ -47,12 +52,12 @@ const ShowDetailPage: FC<ShowDetailPageProps> = ({
 
           <p className="mt-2 text-lg font-bold border border-gray-700 rounded-md px-2 py-1 max-w-max">
             Rating:{" "}
-            <span className="text-gray-700">{show.rating.avrage}/10</span>
+            <span className="text-gray-700">{show.rating.average}/10</span>
           </p>
         </div>
       </div>
 
-      {/* <div className="mt-2">
+      <div className="mt-2">
         <h4 className="text-2xl font-semibold tracking-wide">Cast</h4>
         <div className="flex flex-wrap">
           <CastCard
@@ -103,15 +108,16 @@ const ShowDetailPage: FC<ShowDetailPageProps> = ({
             avatarLink="https://static.tvmaze.com/uploads/images/medium_portrait/232/581040.jpg"
             name="Mimi Ndiweni"
           />
-        </div> */}
-      {/* </div> */}
+        </div>
+      </div>
     </div>
   );
 };
 
-const mapStateToProps = (state: State, ownProps: WithRouterProps) => {
+const mapStateToProps = (state: State, ownProps: OwnProps) => {
   return {
     show: showmapselectore(state)[+ownProps.params.showId],
+    loading: showloadingselector(state),
   };
 };
 

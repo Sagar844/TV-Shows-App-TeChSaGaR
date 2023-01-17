@@ -4,8 +4,8 @@ import { show } from "./models/show";
 
 const BASE_URL = "https://api.tvmaze.com/"
 
-export function seasrchShows(keyword: string) {
-  return axios
+export async function seasrchShows(keyword: string) {
+  return await axios
     .get<{ show: show }[]>( BASE_URL+"search/shows?q=" + keyword)
     .then((response) => response.data.map((item: any) => item.show));
 }

@@ -19,9 +19,9 @@ export const showqerychange: ActionCreator<string> = (query) => ({
 });
 
 export const SHOW_ID_ = "SHOW_ID_ ";
-export const showActionLoaded: ActionCreator<show> = (show: show) => ({
+export const showActionLoaded: ActionCreator<show> = (showdetail: show) => ({
   type: SHOW_ID_,
-  payload: show,
+  payload: showdetail,
 });
 
 export const Loadshow_Action_ = "Loadshow_Action_ ";
@@ -30,3 +30,4 @@ export const showloadedACTION: ActionCreator<number> = (showId: number) => ({
   type: Loadshow_Action_,
   payload: showId,
 });
+
